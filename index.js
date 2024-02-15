@@ -8,7 +8,31 @@ const app = express();
 app.use(cors());
 
 // Define a route to fetch news from the NewsAPI
-app.get("/news", async (req, res) => {// need to change path of /news to appropriate path of news app 
+app.get("/news", async (req, res) => {
+  /*
+  // in case to take api key from front end side
+  try {
+        const apiKey = req.query.apiKey; // Get API key from request parameters
+        if (!apiKey) {
+            return res.status(400).json({ error: 'API key is required' });
+        }
+
+        // Make a GET request to the NewsAPI with the provided API key and country
+        const response = await axios.get('https://newsapi.org/v2/top-headlines', {
+            params: {
+                country: 'us', // Change 'us' to the appropriate country code
+                apiKey: apiKey, // Use the provided API key
+            }
+        });
+
+        // Send the response data back to the client
+        res.json(response.data);
+    }
+  */ /*
+  With this modification, clients can include the API key as a query parameter when making requests to /news, like so:
+GET /news?apiKey=YOUR_NEWSAPI_API_KEY
+  */
+
   try {
     // Make a GET request to the NewsAPI with your API key and country
     const response = await axios.get("https://newsapi.org/v2/top-headlines", {
