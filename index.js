@@ -12,22 +12,29 @@ app.get("/news", async (req, res) => {
   
   // in case to take api key from front end side
   try {
-        const apiKey = req.query.apiKey; // Get API key from request parameters
-        if (!apiKey) {
-            return res.status(400).json({ error: 'API key is required' });
-        }
+    const apiKey = req.query.apiKey; // Get API key from request parameters
+    const category = req.query.category; // Get category from request parameters
+    const pageSize = req.query.pageSize; // Get pageSize from request parameters
+    const page = req.query.page; // Get page number from request parameters
 
-        // Make a GET request to the NewsAPI with the provided API key and country
-        const response = await axios.get('https://newsapi.org/v2/top-headlines', {
-            params: {
-                country: 'us', // Change 'us' to the appropriate country code
-                apiKey: apiKey, // Use the provided API key
-            }
-        });
-
-        // Send the response data back to the client
-        res.json(response.data);
+    if (!apiKey) {
+      return res.status(400).json({ error: "API key is required" });
     }
+
+    // Make a GET request to the NewsAPI with the provided API key and country
+    const response = await axios.get("https://newsapi.org/v2/top-headlines", {
+      params: {
+        country: "in", // Change 'in' to the appropriate country code
+        apiKey: apiKey, // Use the provided API key
+        category: category, // using category in api
+        pageSize: pageSize, // using pageSize in api
+        page: page, // using page number in api
+      },
+    });
+
+    // Send the response data back to the client
+    res.json(response.data);
+  }
    /*
   With this modification, clients can include the API key as a query parameter when making requests to /news, like so:
 GET /news?apiKey=YOUR_NEWSAPI_API_KEY
